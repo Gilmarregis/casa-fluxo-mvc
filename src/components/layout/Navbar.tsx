@@ -14,7 +14,7 @@ const Navbar = () => {
   const location = useLocation();
 
   const navItems = [
-    { path: '/', icon: Home, label: 'Dashboard' },
+    { path: '/dashboard', icon: Home, label: 'Dashboard' },
     { path: '/transactions', icon: TrendingUp, label: 'Transações' },
     { path: '/add', icon: PlusCircle, label: 'Adicionar' },
     { path: '/budgets', icon: Target, label: 'Orçamentos' },
@@ -26,7 +26,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link to="/" className="flex items-center space-x-2">
+            <Link to="/dashboard" className="flex items-center space-x-2">
               <Wallet className="h-8 w-8 text-primary" />
               <span className="text-xl font-bold text-foreground">FinanceHome</span>
             </Link>
@@ -60,4 +60,5 @@ const Navbar = () => {
   );
 };
 
+export { Navbar };
 export default Navbar;
