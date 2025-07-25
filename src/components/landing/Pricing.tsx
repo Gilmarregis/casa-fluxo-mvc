@@ -78,33 +78,30 @@ export function Pricing({ onSelectPlan }: PricingProps) {
   ];
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-br from-muted/20 to-background">
-      <div className="container mx-auto max-w-7xl">
-        <div className="text-center mb-16">
-          <Badge className="mb-4 px-4 py-2">
-            <Star className="w-4 h-4 mr-2" />
-            Mais de 10.000 famílias já economizam conosco
+    <section className="py-12 px-4 bg-gradient-to-br from-muted/20 to-background">
+      <div className="container mx-auto max-w-5xl">
+        <div className="text-center mb-8">
+          <Badge className="mb-3 px-3 py-1 text-xs">
+            <Star className="w-3 h-3 mr-1" />
+            +10.000 famílias economizando
           </Badge>
           
-          <h2 className="text-3xl md:text-6xl font-bold mb-6">
+          <h2 className="text-2xl md:text-4xl font-bold mb-4">
             <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              Pare de perder dinheiro
+              Escolha seu plano
             </span>
-            <br />
-            <span className="text-foreground">Comece a economizar hoje</span>
           </h2>
           
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            <strong>Garantia de 30 dias:</strong> Se você não economizar pelo menos 
-            3x o valor pago, devolvemos 100% do seu dinheiro.
+          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-4">
+            <strong>Garantia de 30 dias</strong> ou seu dinheiro de volta
           </p>
 
-          <div className="inline-flex items-center bg-green-500/10 text-green-600 px-6 py-3 rounded-full font-semibold">
-            ⏰ Oferta especial: <strong>50% OFF</strong> válida até domingo!
+          <div className="inline-flex items-center bg-green-500/10 text-green-600 px-4 py-2 rounded-full text-sm font-semibold">
+            ⏰ <strong>50% OFF</strong> até domingo!
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           {plans.map((plan, index) => (
             <Card 
               key={plan.id} 
@@ -122,8 +119,8 @@ export function Pricing({ onSelectPlan }: PricingProps) {
                 </div>
               )}
               
-              <CardHeader className="text-center pb-6">
-                <div className={`w-16 h-16 mx-auto mb-4 rounded-2xl flex items-center justify-center ${
+              <CardHeader className="text-center pb-3">
+                <div className={`w-10 h-10 mx-auto mb-3 rounded-xl flex items-center justify-center ${
                   plan.popular 
                     ? 'bg-gradient-to-br from-primary to-secondary text-white shadow-lg' 
                     : 'bg-primary/10 text-primary'
@@ -131,62 +128,48 @@ export function Pricing({ onSelectPlan }: PricingProps) {
                   {plan.icon}
                 </div>
                 
-                <CardTitle className="text-2xl mb-2">{plan.name}</CardTitle>
-                <CardDescription className="text-base mb-4">{plan.description}</CardDescription>
+                <CardTitle className="text-lg mb-1">{plan.name}</CardTitle>
+                <CardDescription className="text-sm mb-3">{plan.description}</CardDescription>
                 
-                <div className="space-y-2">
+                <div className="space-y-1">
                   <div className="flex items-center justify-center gap-2">
                     {plan.originalPrice && (
-                      <span className="text-lg text-muted-foreground line-through">
+                      <span className="text-sm text-muted-foreground line-through">
                         {plan.originalPrice}
                       </span>
                     )}
-                    <span className="text-4xl md:text-5xl font-bold">{plan.price}</span>
-                    <span className="text-muted-foreground">{plan.period}</span>
+                    <span className="text-2xl md:text-3xl font-bold">{plan.price}</span>
+                    <span className="text-muted-foreground text-sm">{plan.period}</span>
                   </div>
                   
                   {plan.savings && (
-                    <Badge variant="secondary" className="text-sm">
+                    <Badge variant="secondary" className="text-xs">
                       💰 {plan.savings}
                     </Badge>
                   )}
                 </div>
               </CardHeader>
               
-              <CardContent className="pb-6">
-                <ul className="space-y-4">
-                  {plan.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm leading-relaxed">{feature}</span>
+              <CardContent className="pb-3">
+                <ul className="space-y-2">
+                  {plan.features.slice(0, 5).map((feature, featureIndex) => (
+                    <li key={featureIndex} className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-xs leading-relaxed">{feature}</span>
                     </li>
                   ))}
                 </ul>
-                
-                {plan.testimonial && (
-                  <div className="mt-6 p-4 bg-muted/50 rounded-lg border-l-4 border-primary">
-                    <p className="text-sm italic text-muted-foreground">
-                      "{plan.testimonial}"
-                    </p>
-                    <div className="flex items-center mt-2">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-                      ))}
-                      <span className="text-xs text-muted-foreground ml-2">Usuário verificado</span>
-                    </div>
-                  </div>
-                )}
               </CardContent>
               
               <CardFooter className="pt-0">
                 <Button 
-                  className={`w-full text-base py-6 ${
+                  className={`w-full text-sm py-4 ${
                     plan.popular 
                       ? 'bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 shadow-lg transform hover:scale-105 transition-all duration-200' 
                       : ''
                   }`}
                   variant={plan.popular ? "default" : "outline"}
-                  size="lg"
+                  size="sm"
                   onClick={() => onSelectPlan(plan.id)}
                 >
                   {plan.buttonText}
@@ -197,36 +180,35 @@ export function Pricing({ onSelectPlan }: PricingProps) {
         </div>
 
         {/* Social Proof & Guarantees */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
-          <div className="text-center p-6 rounded-lg bg-card border">
-            <Shield className="w-8 h-8 mx-auto mb-3 text-green-500" />
-            <h3 className="font-semibold mb-2">Garantia de 30 dias</h3>
-            <p className="text-sm text-muted-foreground">
-              Não funcionou? Devolvemos 100% do valor
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+          <div className="text-center p-4 rounded-lg bg-card border">
+            <Shield className="w-6 h-6 mx-auto mb-2 text-green-500" />
+            <h3 className="font-semibold mb-1 text-sm">Garantia 30 dias</h3>
+            <p className="text-xs text-muted-foreground">
+              100% do valor de volta
             </p>
           </div>
           
-          <div className="text-center p-6 rounded-lg bg-card border">
-            <Star className="w-8 h-8 mx-auto mb-3 text-yellow-500" />
-            <h3 className="font-semibold mb-2">⭐ 4.9/5 estrelas</h3>
-            <p className="text-sm text-muted-foreground">
-              Mais de 2.000 avaliações positivas
+          <div className="text-center p-4 rounded-lg bg-card border">
+            <Star className="w-6 h-6 mx-auto mb-2 text-yellow-500" />
+            <h3 className="font-semibold mb-1 text-sm">⭐ 4.9/5 estrelas</h3>
+            <p className="text-xs text-muted-foreground">
+              +2.000 avaliações
             </p>
           </div>
           
-          <div className="text-center p-6 rounded-lg bg-card border">
-            <TrendingUp className="w-8 h-8 mx-auto mb-3 text-primary" />
-            <h3 className="font-semibold mb-2">R$ 2.3M economizados</h3>
-            <p className="text-sm text-muted-foreground">
-              Total poupado por nossos usuários
+          <div className="text-center p-4 rounded-lg bg-card border">
+            <TrendingUp className="w-6 h-6 mx-auto mb-2 text-primary" />
+            <h3 className="font-semibold mb-1 text-sm">R$ 2.3M economizados</h3>
+            <p className="text-xs text-muted-foreground">
+              Total pelos usuários
             </p>
           </div>
         </div>
 
-        <div className="text-center mt-12 p-6 bg-gradient-to-r from-muted/50 to-transparent rounded-lg">
-          <p className="text-muted-foreground text-lg">
-            💳 Aceitamos PIX, cartão e boleto • 🔒 Pagamento 100% seguro (SSL) • 
-            📞 Suporte especializado em português • 🚀 Ative em menos de 2 minutos
+        <div className="text-center mt-6 p-4 bg-gradient-to-r from-muted/50 to-transparent rounded-lg">
+          <p className="text-muted-foreground text-sm">
+            💳 PIX, cartão e boleto • 🔒 Pagamento seguro • 📞 Suporte português • 🚀 Ative em 2min
           </p>
         </div>
       </div>
