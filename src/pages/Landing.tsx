@@ -37,7 +37,10 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen">
-      <Hero />
+      <Hero onGetStarted={() => {
+        setAuthMode('register');
+        setShowAuth(true);
+      }} />
       <Pricing onSelectPlan={handleSelectPlan} />
       
       {/* Auth Modal */}
