@@ -6,7 +6,8 @@ import {
   PlusCircle, 
   Target, 
   BarChart3,
-  Wallet
+  Wallet,
+  BookOpen
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -18,7 +19,8 @@ const Navbar = () => {
     { path: '/transactions', icon: TrendingUp, label: 'Transações' },
     { path: '/add', icon: PlusCircle, label: 'Adicionar' },
     { path: '/budgets', icon: Target, label: 'Orçamentos' },
-    { path: '/reports', icon: BarChart3, label: 'Relatórios' }
+    { path: '/reports', icon: BarChart3, label: 'Relatórios' },
+    { path: '/educacao', icon: BookOpen, label: 'Educação' }
   ];
 
   return (
