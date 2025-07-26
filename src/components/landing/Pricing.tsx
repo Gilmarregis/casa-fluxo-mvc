@@ -93,7 +93,7 @@ export function Pricing({ onSelectPlan }: PricingProps) {
           </h2>
           
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-4">
-            <strong>Garantia de 30 dias</strong> ou seu dinheiro de volta
+            <strong>Tire ou devolvemos seu dinheiro</strong>
           </p>
 
           <div className="inline-flex items-center bg-green-500/10 text-green-600 px-4 py-2 rounded-full text-sm font-semibold">
