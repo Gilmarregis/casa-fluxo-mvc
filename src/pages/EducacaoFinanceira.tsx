@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BookOpen, Play, CheckCircle, Clock, TrendingUp, DollarSign, PiggyBank, Target, Shield } from "lucide-react";
+import { BookOpen, Play, CheckCircle, Clock, TrendingUp, DollarSign, PiggyBank, Target, Shield, Lightbulb, ArrowRight, Star, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -164,6 +164,90 @@ export default function EducacaoFinanceira() {
 
   const sessoesCompletas = sessoes.filter(s => s.concluida).length;
 
+  // Sistema de recomendações personalizadas
+  const getRecomendacoes = () => {
+    const recomendacoes = [];
+    
+    // Baseado no progresso
+    if (progressoGeral < 30) {
+      recomendacoes.push({
+        tipo: 'urgente',
+        titulo: 'Comece pelo básico: Orçamento',
+        descricao: 'Você precisa estabelecer um controle básico dos seus gastos antes de avançar',
+        acao: 'Iniciar sessão de Orçamento',
+        sessaoId: '1',
+        icon: <AlertTriangle className="w-5 h-5 text-orange-500" />,
+        prioridade: 'alta'
+      });
+    }
+    
+    if (sessoes.find(s => s.id === '1')?.concluida && !sessoes.find(s => s.id === '2')?.concluida) {
+      recomendacoes.push({
+        tipo: 'próximo-passo',
+        titulo: 'Elimine suas dívidas agora',
+        descricao: 'Com orçamento dominado, é hora de se livrar das dívidas para acelerar sua independência',
+        acao: 'Continuar com Eliminação de Dívidas',
+        sessaoId: '2',
+        icon: <TrendingUp className="w-5 h-5 text-blue-500" />,
+        prioridade: 'alta'
+      });
+    }
+    
+    if (progressoGeral >= 50 && !sessoes.find(s => s.id === '3')?.concluida) {
+      recomendacoes.push({
+        tipo: 'proteção',
+        titulo: 'Construa sua reserva de emergência',
+        descricao: 'Proteja-se de imprevistos antes de começar a investir',
+        acao: 'Aprender sobre Reserva de Emergência',
+        sessaoId: '3',
+        icon: <Shield className="w-5 h-5 text-green-500" />,
+        prioridade: 'média'
+      });
+    }
+    
+    if (sessoes.find(s => s.id === '3')?.concluida && !sessoes.find(s => s.id === '4')?.concluida) {
+      recomendacoes.push({
+        tipo: 'crescimento',
+        titulo: 'Hora de investir e multiplicar',
+        descricao: 'Com base sólida, comece a fazer seu dinheiro trabalhar para você',
+        acao: 'Descobrir Investimentos',
+        sessaoId: '4',
+        icon: <DollarSign className="w-5 h-5 text-purple-500" />,
+        prioridade: 'média'
+      });
+    }
+    
+    // Recomendações adicionais baseadas no perfil
+    if (progressoGeral >= 80) {
+      recomendacoes.push({
+        tipo: 'avançado',
+        titulo: 'Planeje sua aposentadoria',
+        descricao: 'Você está quase expert! Agora é hora de pensar no longo prazo',
+        acao: 'Planejar Aposentadoria',
+        sessaoId: '5',
+        icon: <Target className="w-5 h-5 text-indigo-500" />,
+        prioridade: 'baixa'
+      });
+    }
+    
+    // Recomendação de revisão
+    if (progressoGeral === 100) {
+      recomendacoes.push({
+        tipo: 'revisão',
+        titulo: 'Parabéns! Revise seus conhecimentos',
+        descricao: 'Você domina todos os tópicos! Que tal revisar para fixar ainda mais?',
+        acao: 'Revisar Conteúdos',
+        sessaoId: null,
+        icon: <Star className="w-5 h-5 text-yellow-500" />,
+        prioridade: 'baixa'
+      });
+    }
+    
+    return recomendacoes.slice(0, 3); // Máximo 3 recomendações
+  };
+
+  const recomendacoes = getRecomendacoes();
+
   return (
     <div className="container mx-auto p-6 max-w-6xl">
       {/* Header */}
@@ -213,6 +297,60 @@ export default function EducacaoFinanceira() {
 
         <Progress value={progressoGeral} className="h-3" />
       </div>
+
+      {/* Recomendações Personalizadas */}
+      {recomendacoes.length > 0 && (
+        <div className="mb-8">
+          <div className="flex items-center gap-2 mb-4">
+            <Lightbulb className="w-6 h-6 text-primary" />
+            <h2 className="text-2xl font-bold">Recomendações para Você</h2>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {recomendacoes.map((rec, index) => (
+              <Card key={index} className={`transition-all hover:shadow-lg border-l-4 ${
+                rec.prioridade === 'alta' ? 'border-l-red-500 bg-red-50/50' : 
+                rec.prioridade === 'média' ? 'border-l-yellow-500 bg-yellow-50/50' : 
+                'border-l-green-500 bg-green-50/50'
+              }`}>
+                <CardHeader className="pb-3">
+                  <div className="flex items-start gap-3">
+                    {rec.icon}
+                    <div className="flex-1">
+                      <Badge variant="outline" className="mb-2 text-xs">
+                        {rec.tipo === 'urgente' ? '🚨 Urgente' :
+                         rec.tipo === 'próximo-passo' ? '➡️ Próximo Passo' :
+                         rec.tipo === 'proteção' ? '🛡️ Proteção' :
+                         rec.tipo === 'crescimento' ? '📈 Crescimento' :
+                         rec.tipo === 'avançado' ? '🎯 Avançado' : '⭐ Revisão'}
+                      </Badge>
+                      <CardTitle className="text-lg leading-tight">{rec.titulo}</CardTitle>
+                    </div>
+                  </div>
+                </CardHeader>
+                
+                <CardContent className="pt-0">
+                  <CardDescription className="mb-4">{rec.descricao}</CardDescription>
+                  
+                  <Button 
+                    className="w-full" 
+                    size="sm"
+                    variant={rec.prioridade === 'alta' ? 'default' : 'outline'}
+                    onClick={() => {
+                      if (rec.sessaoId) {
+                        setSessaoAtiva(rec.sessaoId);
+                      }
+                    }}
+                  >
+                    {rec.acao}
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Sessões */}
       <Tabs value={sessaoAtiva || "lista"} onValueChange={setSessaoAtiva}>
